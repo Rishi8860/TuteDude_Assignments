@@ -50,5 +50,26 @@ def form():
 def success():
     return render_template('success.html')
 
+todos_collection = db['todos']
+
+@app.route('/submittodoitem', methods=['POST'])
+def submit_todo_item():
+    item_name = request.form.get('itemName')
+    item_description = request.form.get('itemDescription')
+    if not item_name or not item_description:
+        return jsonify({'error': 'Both itemName and itemDescription are required.'}), 400
+    try:
+        todos_collection.insert_one({
+            'itemName': item_name,
+            'itemDescription': item_description
+        })
+        return jsonify({'message': 'To-Do item submitted successfully.'}), 201
+    except PyMongoError as e:
+        return jsonify({'error': f'Database error: {str(e)}'}), 500
+
+@app.route('/todo', methods=['GET'])
+def todo():
+    return render_template('todo.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
