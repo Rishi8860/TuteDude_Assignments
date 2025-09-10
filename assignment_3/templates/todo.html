@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>To-Do Page</title>
+</head>
+<body>
+    <h1>To-Do Item Submission</h1>
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <form id="todoForm" method="post" action="/submittodoitem">
+        <label for="itemName">Item Name:</label><br />
+        <input type="text" id="itemName" name="itemName" required /><br /><br />
+        <label for="itemDescription">Item Description:</label><br />
+        <textarea id="itemDescription" name="itemDescription" rows="4" cols="50" required></textarea><br /><br />
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
